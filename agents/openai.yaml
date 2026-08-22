@@ -1,0 +1,4 @@
+interface:
+  display_name: "One Shot"
+  short_description: "Turn a podcast idea into a finished product"
+  default_prompt: "Use $one-shot to turn this podcast transcript and its artifacts into a complete, reviewed, locally previewable product."
