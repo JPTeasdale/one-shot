@@ -1,93 +1,66 @@
 ---
 name: one-shot
-description: Autonomously transform AI One Shot Podcast transcripts and accompanying artifacts into a fully researched, expanded, technically designed, implemented, independently reviewed, and locally previewable product. Use when Justin and John provide a One Shot recording folder, podcast brainstorm, transcript, or rough product artifacts and ask Codex to realize the idea end-to-end without clarification; also use to resume an existing one-shot-output run.
+description: Turn a One Shot Podcast transcript and its artifacts into an impressive, imaginative, delightful, polished, product, in one pass without asking for clarification. Use when invoked directly.
 ---
 
 # One Shot
 
 ## Mission
 
-Turn one podcast conversation and its supporting artifacts into the most impressive coherent product that can be completed and demonstrated locally with the available tools. Do not stop at a summary, concept, specification, mockup, or MVP when a fuller implementation is feasible.
+Realize the product that that conversation is about. Preserve and expand upon the core idea, invent user-visible possibilities around it, and make the primary experience immediately understandable, varied, and impressive. 
 
-## Honor the operating contract
+## Context
 
-- Work without asking Justin or John to resolve creative ambiguity. Inspect the evidence, make the strongest reasonable decision, and record it.
-- Preserve all supplied source artifacts as read-only evidence.
-- Use independent subagents for creation, research, review, technical design, and implementation. Keep the root agent as orchestrator and final integrator.
-- Expand beyond the spoken idea while preserving its core identity. Prefer coherent depth over a pile of disconnected features.
-- Create actual mockups and an actual local product preview, not descriptions of what could be made.
-- Treat deployment, purchasing, printing, account creation, uploads, and other irreversible or external production actions as permission-gated. Prepare them but do not execute them without authority.
-- Persist work after every stage so the run can survive compaction, interruption, or agent failure.
+This still will be run inside of a folder containing a podcast transcript about a product idea and different artifacts related to that idea. Your job is to build, or otherwise fully realize that idea.
 
-## Start or resume the run
+## Goal Phase
 
-1. Resolve `SOURCE_ROOT` from the folder named by the user; otherwise use the current working directory.
-2. Default `RUN_ROOT` to `<SOURCE_ROOT>/one-shot-output`. Use another location only when the user explicitly supplies one.
-3. Read [references/output-contract.md](references/output-contract.md) and [references/orchestration.md](references/orchestration.md) completely.
-4. Run `scripts/initialize_run.py <SOURCE_ROOT>` before creating project artifacts. If a run already exists, preserve it and resume from the earliest incomplete quality gate.
-5. Inspect `source-manifest.json`, then read every relevant transcript and artifact. Use the appropriate installed document, PDF, spreadsheet, presentation, image, audio, or code skill when available.
-6. Identify references to missing artifacts, but do not pause. Record the gap and continue using the available evidence.
+First need to determine your goal.  Read / parse / examine every file in your directory. 
 
-## Resolve ambiguity deliberately
+Record the following in `GOAL.md` 
 
-Apply this precedence order:
+- The "elevator pitch". What we are building? Who is it for? What is the vibe? 
+- What is the deliverable? This will depend on the type of product being discussed (the medium), but it should always be something production ready.  If it is a tech product then it is a complete app, or website. If it is a physical product, then it is the complete proof files ready to send to the printer or manufacturer. Etc. 
+- the core nouns that need meaningful variety, such as characters, places, stories, objects, outcomes, or styles;
+- an observable definition of impressive completion.
 
-1. Explicit hard constraints and clearly stated non-goals
-2. Ideas repeatedly endorsed by both hosts
-3. Concrete examples, sketches, and generated artifacts
-4. The interpretation that creates the most coherent, distinctive, and locally demonstrable result
+Do not replace an endorsed experiential anchor with an easier interface. If the hosts imagine discovering possibilities on a map, a list, receipt flow, or status dashboard is not an equivalent interpretation.
 
-Do not silently average conflicting ideas. Choose one direction and record the conflict, decision, evidence, and consequence in `decision-log.md`. Treat stray brainstorming as optional unless it strengthens the chosen product.
+## Phase 1 Design Research and Skill Creation Phase
 
-## Execute the studio workflow
+You do not have all of the skills necessary to complete this in the best way possible. In this phase your job is to train yourself to implement your goal in the best way possible. Search the internet for the answers to these questions:
 
-Follow [references/orchestration.md](references/orchestration.md) for agent roles, iteration mechanics, and handoffs. Satisfy [references/output-contract.md](references/output-contract.md) exactly.
+1. What does "excellent" look like for this medium? 
+2. How can you evaluate taste in this medium? 
+3. What are common things that people complain about for other products published in this medium?
+4. What production workflows exist to ensure quality in this medium? How can we adapt these workflows. 
+5. What artifacts are required to make this a complete product? Some products will require multiple artifacts / parts.  
 
-1. **Define:** Derive and independently review the high-level product definition.
-2. **Expand:** Run at least five focused research/generation/review rounds. Define known features, invent valuable missing capabilities, eliminate “demo smell,” curate cited inspiration, and generate visual mockups.
-3. **Design:** Read [references/medium-routing.md](references/medium-routing.md), select the correct implementation/production path, research current technical or manufacturing constraints, and create an individually reviewed task graph.
-4. **Implement:** Execute tasks in dependency order with an Implementor/ImplementationReviewer loop for every task. Integrate continuously and maintain a working local preview.
-5. **Release locally:** Read [references/quality-gates.md](references/quality-gates.md), run final independent review and deterministic validation, then package a start-here guide, artifact inventory, and production-readiness handoff.
+Use your skill creator and skill evaluator to create the specific skills necessary to make this particular product amazing. Put them in ./skills/*
 
-After each accepted phase, run the validator with that phase's scope (`--through phase-1`, `phase-2`, `phase-3`, or `phase-4`). Use `--through final` only after the final-delivery artifacts exist.
+A good place to start is:
 
-## Use subagents correctly
+1. Planner - How do we break the product down into discrete, executable steps. 
+2. Product Design / Direction - This skill is responsible to ensure we are building towards a complete, consistent product. 
+3. Artifact Builders - Each artifact / part should have it's own build process. 
+4. Artifact Reviewers - Each artifact / part should have it's own best practices that are checked in a review step. Correct for common mistakes that LLMs and AI agents make. 
 
-- Give each subagent one bounded role, the raw evidence paths it needs, an assigned output path, and explicit acceptance criteria.
-- Let parallel agents write only to distinct files. Let the root agent own authoritative merges and state transitions.
-- Give reviewers the source artifacts and the candidate output, not the creator's hidden rationale. Require `PASS` or `REVISE` with evidence.
-- Relay review findings through files or the root orchestrator; do not assume agents can coordinate implicitly.
-- Respect available concurrency. Queue roles when necessary rather than weakening role separation.
-- If subagents are unavailable, perform the roles serially with fresh context boundaries and disclose the fallback in the run log.
+Generally, ensure these skills emphasize: 
 
-## Apply medium-specific expertise
+1. Consistency - This applies to behavior, art design, 
+2. Brevity and Clarity - We don't want to overload the user with duplicate information. 
+3. Variety and Exploration - Brevity doesn't mean limited, it doesn't mean minimal. The final product should feel expansive and interesting. It should reward exploration and curiosity. 
 
-Use relevant installed skills and tools rather than recreating their workflows. In particular:
+## Phase 2: Output Specification Phase
 
-- Use image generation for original mockups and visual variants.
-- Use web research for current products, standards, vendor specifications, and inspiration; prefer primary sources and preserve citations.
-- Use dedicated skills for sites, software development, documents, PDFs, presentations, spreadsheets, and other final media when applicable.
-- Use [references/medium-routing.md](references/medium-routing.md) for software, physical, media, service, and hybrid products.
+Strictly define the output requirements and find a actual publishing route. 
 
-## Finish only when the product is real
+If it is a physical product, where would it be produced? Make sure they have clear specifications and / or template files for the types of artifacts that will need to be generated. 
 
-Run `scripts/validate_run.py <RUN_ROOT> --through final`. Do not claim completion while it reports errors.
+If this is a digital product, the output is the digital product. If we require a server, use Cloudflare products.
 
-Finish only when:
+If this is a physical product, find a manufacturer with a website where we can produce 1-2 copies. Download their required production specifications and any print / product templates that will be relevant to our output artifacts. 
 
-- Every phase has an independent `PASS` verdict.
-- The traceability matrix connects source evidence to requirements, features, tasks, and implemented artifacts.
-- The primary experience is usable locally from `final-delivery/START-HERE.md`.
-- Required files contain no placeholders, fabricated citations, or unsupported completion claims.
-- Production-only actions are either completed with authorization or explicitly packaged as ready-but-not-executed.
+## Phase 3: Implementation
 
-Report the local preview path and command, the finished deliverables, the validation result, and any permission-gated production step.
-
-## Resources
-
-- `scripts/initialize_run.py`: create or resume a safe output structure and inventory source artifacts.
-- `scripts/validate_run.py`: check phase contracts, review verdicts, expansion rounds, mockups, implementation content, and final handoff.
-- `references/orchestration.md`: run the multi-agent studio and its revision loops.
-- `references/output-contract.md`: use the authoritative directory and document schemas.
-- `references/quality-gates.md`: apply review rubrics and release criteria.
-- `references/medium-routing.md`: choose implementation and production paths by product medium.
+ `/goal` yourself to build the output using the skills you've created. This should take 6+ hours to execute, so don't skimp. Every 30 minutes or so, check on the progress and see if we're building towards our goal. If not, correct the skills and workflows and restart.  
